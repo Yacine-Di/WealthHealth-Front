@@ -5,18 +5,28 @@ import { useContext, useState } from 'react'
 import { EmployeeContext } from '../../utils/EmployeeContext'
 
 function CreateEmployee() {
-    const [addEmployee] = useContext(EmployeeContext)
+    const { addEmployee } = useContext(EmployeeContext)
     const [employee, setEmployee] = useState({
         firstName: '',
         lastName: '',
-        dateOfBirth: '',
         startDate: '',
+        department: '',
+        dateOfBirth: '',
         street: '',
         city: '',
         state: '',
         zipCode: '',
-        department: '',
     })
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setEmployee((prev) => ({ ...prev, [name]: value }))
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        addEmployee(employee)
+    }
 
     return (
         <>
@@ -28,28 +38,64 @@ function CreateEmployee() {
                 <h2>Create Employee</h2>
                 <form action="#" id="create-employee">
                     <label htmlFor="first-name">First Name</label>
-                    <input type="text" id="first-name" />
+                    <input
+                        type="text"
+                        id="first-name"
+                        name="firstName"
+                        value={employee.firstName}
+                        onChange={handleChange}
+                    />
 
                     <label htmlFor="last-name">Last Name</label>
-                    <input type="text" id="last-name" />
+                    <input
+                        type="text"
+                        id="last-name"
+                        name="lastName"
+                        value={employee.lastName}
+                        onChange={handleChange}
+                    />
 
                     <label htmlFor="date-of-birth">Date of Birth</label>
-                    <input id="date-of-birth" type="date" />
+                    <input
+                        type="date"
+                        id="date-of-birth"
+                        name="dateOfBirth"
+                        value={employee.dateOfBirth}
+                        onChange={handleChange}
+                    />
 
                     <label htmlFor="start-date">Start Date</label>
-                    <input id="start-date" type="date" />
+                    <input
+                        id="start-date"
+                        type="date"
+                        name="startDate"
+                        value={employee.startDate}
+                        onChange={handleChange}
+                    />
 
                     <fieldset className="address">
                         <legend>Address</legend>
 
                         <label htmlFor="street">Street</label>
-                        <input id="street" type="text" />
+                        <input
+                            id="street"
+                            type="text"
+                            name="street"
+                            value={employee.street}
+                            onChange={handleChange}
+                        />
 
                         <label htmlFor="city">City</label>
-                        <input id="city" type="text" />
+                        <input
+                            id="city"
+                            type="text"
+                            name="city"
+                            value={employee.city}
+                            onChange={handleChange}
+                        />
 
                         <label htmlFor="state">State</label>
-                        <select name="state" id="state">
+                        <select name="state" id="state" onChange={handleChange}>
                             {states.map((state, index) => (
                                 <option key={index} value={state.abbreviation}>
                                     {state.name}
@@ -58,20 +104,33 @@ function CreateEmployee() {
                         </select>
 
                         <label htmlFor="zip-code">Zip Code</label>
-                        <input id="zip-code" type="number" />
+                        <input
+                            id="zip-code"
+                            type="number"
+                            name="zipCode"
+                            value={employee.zipCode}
+                            onChange={handleChange}
+                        />
                     </fieldset>
 
                     <label htmlFor="department">Department</label>
-                    <select name="department" id="department">
-                        <option>Sales</option>
-                        <option>Marketing</option>
-                        <option>Engineering</option>
-                        <option>Human Resources</option>
-                        <option>Legal</option>
+                    <select
+                        name="department"
+                        id="department"
+                        value={employee.department}
+                        onChange={handleChange}
+                    >
+                        <option value="Sales">Sales</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Legal">Legal</option>
                     </select>
                 </form>
 
-                <button>Save</button>
+                <button type="submit" onClick={handleSubmit}>
+                    Save
+                </button>
             </div>
             <div id="confirmation" className="modal">
                 Employee Created!
