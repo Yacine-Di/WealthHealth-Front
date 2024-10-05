@@ -3,8 +3,10 @@ import './index.scss'
 import states from '../../utils/states'
 import { useContext, useState } from 'react'
 import { EmployeeContext } from '../../utils/EmployeeContext'
+import Modal from '../../components/Modal'
 
 function CreateEmployee() {
+    const [isModalOpen, setModalOpen] = useState(false)
     const { addEmployee } = useContext(EmployeeContext)
     const [employee, setEmployee] = useState({
         firstName: '',
@@ -26,6 +28,7 @@ function CreateEmployee() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         addEmployee(employee)
+        setModalOpen(true)
     }
 
     return (
@@ -132,9 +135,7 @@ function CreateEmployee() {
                     Save
                 </button>
             </div>
-            <div id="confirmation" className="modal">
-                Employee Created!
-            </div>
+            <Modal isOpen={isModalOpen} setModalOpen={setModalOpen} />
         </>
     )
 }

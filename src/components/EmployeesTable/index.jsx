@@ -1,13 +1,22 @@
-import { useContext } from 'react'
-import { EmployeeContext } from '../../utils/EmployeeContext'
-import { Link } from 'react-router-dom'
-
-function EmployeeList() {
-    const { employees } = useContext(EmployeeContext)
-
+function EmployeesTable({ employees }) {
     return (
-        <>
-            <h1>Current Employees</h1>
+        <div className="table">
+            <div className="table-controls">
+                <div className="table-controls__row-count">
+                    Show
+                    <select>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
+                    entries
+                </div>
+                <div className="table-controls__search">
+                    <label htmlFor="search">Search: </label>
+                    <input type="text" id="search"></input>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -38,9 +47,8 @@ function EmployeeList() {
                     ))}
                 </tbody>
             </table>
-            <Link to="/">Home</Link>
-        </>
+        </div>
     )
 }
 
-export default EmployeeList
+export default EmployeesTable
