@@ -33,9 +33,7 @@ function CreateEmployee() {
 
     return (
         <>
-            <div className="title">
-                <h1>HRnet</h1>
-            </div>
+            <h1>HRnet</h1>
             <div className="container">
                 <Link to="/emloyees">View Current Employees</Link>
                 <h2>Create Employee</h2>
