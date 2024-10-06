@@ -39,7 +39,8 @@ legend{
     color: #0069d9;
 }
 
-label {
+form > label,
+.address > label {
     display: block;
     margin-top: 10px;
     margin-bottom: 5px;

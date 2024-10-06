@@ -1,6 +1,43 @@
+import './index.scss'
+import { useState } from 'react'
+
 function EmployeesTable({ employees }) {
+    const [previousIndex, setPreviousIndex] = useState(0)
+    const [previousTarget, setPreviousTarget] = useState(null)
+    const columnsTitles = [
+        'First Name',
+        'Last Name',
+        'Start Date',
+        'Departement',
+        'Date Of Birth',
+        'Street',
+        'City',
+        'State',
+        'Zip Code',
+    ]
+
+    const handleBackGroundClick = (event, index) => {
+        if (index !== previousIndex && previousTarget !== null) {
+            previousTarget.className = 'sorting'
+        }
+
+        setPreviousIndex(index)
+        setPreviousTarget(event.currentTarget)
+
+        if (event.currentTarget.classList.contains('sorting')) {
+            event.currentTarget.classList.remove('sorting')
+            event.currentTarget.classList.add('sorting_asc')
+        } else if (event.currentTarget.classList.contains('sorting_asc')) {
+            event.currentTarget.classList.remove('sorting_asc')
+            event.currentTarget.classList.add('sorting_desc')
+        } else if (event.currentTarget.classList.contains('sorting_desc')) {
+            event.currentTarget.classList.remove('sorting_desc')
+            event.currentTarget.classList.add('sorting_asc')
+        }
+    }
+
     return (
-        <div className="table">
+        <div className="dataTable">
             <div className="table-controls">
                 <div className="table-controls__row-count">
                     Show
@@ -20,15 +57,17 @@ function EmployeesTable({ employees }) {
             <table>
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Start Date</th>
-                        <th>Department</th>
-                        <th>Date Of Birth</th>
-                        <th>Street</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Zip Code</th>
+                        {columnsTitles.map((title, index) => (
+                            <th
+                                key={index}
+                                className="sorting"
+                                onClick={(event) =>
+                                    handleBackGroundClick(event, index)
+                                }
+                            >
+                                {title}
+                            </th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>
