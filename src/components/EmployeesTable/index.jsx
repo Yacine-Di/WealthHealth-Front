@@ -1,29 +1,21 @@
+import Pagination from '../Pagination'
 import './index.scss'
 import { useState } from 'react'
 
-function EmployeesTable({ employees }) {
-    const [previousIndex, setPreviousIndex] = useState(0)
-    const [previousTarget, setPreviousTarget] = useState(null)
+function EmployeesTable({ employees, columnsTitles }) {
+    const [previousColIndex, setPreviousColIndex] = useState(0)
+    const [previousColClicked, setPreviousColClicked] = useState(null)
     const [sortedEmployees, setSortedEmployees] = useState([...employees])
-    const columnsTitles = [
-        'First Name',
-        'Last Name',
-        'Start Date',
-        'Departement',
-        'Date Of Birth',
-        'Street',
-        'City',
-        'State',
-        'Zip Code',
-    ]
+    const [rowsPerPage, setRowsPerPage] = useState(10)
+    const [currentPage, setCurrentPage] = useState(1)
 
     const handleBackGroundClick = (event, index) => {
-        if (index !== previousIndex && previousTarget !== null) {
-            previousTarget.className = 'sorting'
+        if (index !== previousColIndex && previousColClicked !== null) {
+            previousColClicked.className = 'sorting'
         }
 
-        setPreviousIndex(index)
-        setPreviousTarget(event.currentTarget)
+        setPreviousColIndex(index)
+        setPreviousColClicked(event.currentTarget)
 
         const key = Object.keys(employees[0])[index]
         let sortedData = []
@@ -51,12 +43,20 @@ function EmployeesTable({ employees }) {
         setSortedEmployees(sortedData)
     }
 
+    const lastRowIndex = currentPage * rowsPerPage
+    const firstRowIndex = lastRowIndex - rowsPerPage
+    const paginatedEmloyees = sortedEmployees.slice(firstRowIndex, lastRowIndex)
+
     return (
         <div className="dataTable">
             <div className="table-controls">
                 <div className="table-controls__row-count">
                     Show
-                    <select>
+                    <select
+                        onChange={(event) =>
+                            setRowsPerPage(Number(event.target.value))
+                        }
+                    >
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
@@ -86,7 +86,7 @@ function EmployeesTable({ employees }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedEmployees.map((employee, index) => (
+                    {paginatedEmloyees.map((employee, index) => (
                         <tr key={index}>
                             <td>{employee.firstName}</td>
                             <td>{employee.lastName}</td>
@@ -101,6 +101,18 @@ function EmployeesTable({ employees }) {
                     ))}
                 </tbody>
             </table>
+            <div className="table-controls">
+                <p className="table-infos">
+                    Showing {firstRowIndex + 1} to {lastRowIndex} of{' '}
+                    {sortedEmployees.length + 1}
+                </p>
+                <Pagination
+                    datas={sortedEmployees}
+                    rowsPerPage={rowsPerPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            </div>
         </div>
     )
 }

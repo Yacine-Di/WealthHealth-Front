@@ -1,4 +1,12 @@
+.dataTable{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .table-controls{
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,10 +26,6 @@
 .table-controls__search > input{
     height: 15px;
     margin-left: 5px;
-}
-
-.dataTable{
-    width: 90%;
 }
 
 th{
@@ -49,4 +53,8 @@ th{
 
 .sorting_desc{
     background-image: url("../../assets/sort_desc.png") ;
+}
+
+.table-infos{
+    margin: 0;
 }
