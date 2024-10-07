@@ -4,6 +4,7 @@ import { useState } from 'react'
 function EmployeesTable({ employees }) {
     const [previousIndex, setPreviousIndex] = useState(0)
     const [previousTarget, setPreviousTarget] = useState(null)
+    const [sortedEmployees, setSortedEmployees] = useState([...employees])
     const columnsTitles = [
         'First Name',
         'Last Name',
@@ -24,16 +25,30 @@ function EmployeesTable({ employees }) {
         setPreviousIndex(index)
         setPreviousTarget(event.currentTarget)
 
+        const key = Object.keys(employees[0])[index]
+        let sortedData = []
+
         if (event.currentTarget.classList.contains('sorting')) {
             event.currentTarget.classList.remove('sorting')
             event.currentTarget.classList.add('sorting_asc')
+            sortedData = [...employees].sort((a, b) =>
+                a[key].localeCompare(b[key])
+            )
         } else if (event.currentTarget.classList.contains('sorting_asc')) {
             event.currentTarget.classList.remove('sorting_asc')
             event.currentTarget.classList.add('sorting_desc')
+            sortedData = [...employees].sort((b, a) =>
+                a[key].localeCompare(b[key])
+            )
         } else if (event.currentTarget.classList.contains('sorting_desc')) {
             event.currentTarget.classList.remove('sorting_desc')
             event.currentTarget.classList.add('sorting_asc')
+            sortedData = [...employees].sort((a, b) =>
+                a[key].localeCompare(b[key])
+            )
         }
+
+        setSortedEmployees(sortedData)
     }
 
     return (
@@ -71,7 +86,7 @@ function EmployeesTable({ employees }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {employees.map((employee, index) => (
+                    {sortedEmployees.map((employee, index) => (
                         <tr key={index}>
                             <td>{employee.firstName}</td>
                             <td>{employee.lastName}</td>
