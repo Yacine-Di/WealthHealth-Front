@@ -1,6 +1,6 @@
 import Pagination from '../Pagination'
 import './index.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function EmployeesTable({ employees, columnsTitles }) {
     const [previousColIndex, setPreviousColIndex] = useState(0)
@@ -8,6 +8,17 @@ function EmployeesTable({ employees, columnsTitles }) {
     const [sortedEmployees, setSortedEmployees] = useState([...employees])
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [currentPage, setCurrentPage] = useState(1)
+    const [searchTerm, setSearchTerm] = useState('')
+
+    useEffect(() => {
+        const filtered = employees.filter((employee) =>
+            Object.values(employee).some((value) =>
+                value.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        )
+        console.log(filtered)
+        setSortedEmployees(filtered)
+    }, [searchTerm, employees])
 
     const handleBackGroundClick = (event, index) => {
         if (index !== previousColIndex && previousColClicked !== null) {
@@ -66,7 +77,12 @@ function EmployeesTable({ employees, columnsTitles }) {
                 </div>
                 <div className="table-controls__search">
                     <label htmlFor="search">Search: </label>
-                    <input type="text" id="search"></input>
+                    <input
+                        type="text"
+                        id="search"
+                        value={searchTerm}
+                        onChange={(event) => setSearchTerm(event.target.value)}
+                    ></input>
                 </div>
             </div>
             <table>
@@ -86,25 +102,36 @@ function EmployeesTable({ employees, columnsTitles }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {paginatedEmloyees.map((employee, index) => (
-                        <tr key={index}>
-                            <td>{employee.firstName}</td>
-                            <td>{employee.lastName}</td>
-                            <td>{employee.startDate}</td>
-                            <td>{employee.department}</td>
-                            <td>{employee.dateOfBirth}</td>
-                            <td>{employee.street}</td>
-                            <td>{employee.city}</td>
-                            <td>{employee.state}</td>
-                            <td>{employee.zipCode}</td>
+                    {paginatedEmloyees.length > 0 ? (
+                        paginatedEmloyees.map((employee, index) => (
+                            <tr key={index}>
+                                <td>{employee.firstName}</td>
+                                <td>{employee.lastName}</td>
+                                <td>{employee.startDate}</td>
+                                <td>{employee.department}</td>
+                                <td>{employee.dateOfBirth}</td>
+                                <td>{employee.street}</td>
+                                <td>{employee.city}</td>
+                                <td>{employee.state}</td>
+                                <td>{employee.zipCode}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr className="odd">
+                            <td
+                                colSpan={columnsTitles.length}
+                                className="dataTable_empty"
+                            >
+                                No matching records found
+                            </td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
             <div className="table-controls">
                 <p className="table-infos">
                     Showing {firstRowIndex + 1} to {lastRowIndex} of{' '}
-                    {sortedEmployees.length + 1}
+                    {sortedEmployees.length}
                 </p>
                 <Pagination
                     datas={sortedEmployees}

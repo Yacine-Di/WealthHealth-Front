@@ -28,11 +28,23 @@
     margin-left: 5px;
 }
 
+table{
+    width: 100%;
+}
+
 th{
     background-color: #4CAF50;
     color: #FFF;
     padding: 10px, 18px;
     width: 10%;
+}
+
+.odd{
+
+}
+
+.dataTable_empty{
+    text-align: center;
 }
 
 .sorting,
