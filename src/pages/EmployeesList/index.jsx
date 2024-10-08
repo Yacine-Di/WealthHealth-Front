@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { EmployeeContext } from '../../utils/EmployeeContext'
-import EmployeesTable from '../../components/EmployeesTable'
+import DataTable from '../../components/DataTable'
 import columnsTitles from '../../utils/columnsTitles'
 import { Link } from 'react-router-dom'
 
@@ -10,10 +10,7 @@ function EmployeesList() {
     return (
         <>
             <h1>Current Employees</h1>
-            <EmployeesTable
-                employees={employees}
-                columnsTitles={columnsTitles}
-            />
+            <DataTable datas={employees} columnsTitles={columnsTitles} />
             <Link to="/">Home</Link>
         </>
     )

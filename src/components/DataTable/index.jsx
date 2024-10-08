@@ -2,25 +2,31 @@ import Pagination from '../Pagination'
 import './index.scss'
 import { useEffect, useState } from 'react'
 
-function EmployeesTable({ employees, columnsTitles }) {
+//TODO
+/*
+    gestions des couleurs et bordur à finir
+    changer les noms des variables pour les rendre générique à une dataTable
+    Gérer la modale pour préparer l'extraction
+*/
+
+function DataTable({ datas, columnsTitles }) {
     const [previousColIndex, setPreviousColIndex] = useState(0)
     const [previousColClicked, setPreviousColClicked] = useState(null)
-    const [sortedEmployees, setSortedEmployees] = useState([...employees])
+    const [sortedData, setSortedData] = useState([...datas])
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [currentPage, setCurrentPage] = useState(1)
     const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
-        const filtered = employees.filter((employee) =>
+        const filtered = datas.filter((employee) =>
             Object.values(employee).some((value) =>
                 value.toLowerCase().includes(searchTerm.toLowerCase())
             )
         )
-        console.log(filtered)
-        setSortedEmployees(filtered)
-    }, [searchTerm, employees])
+        setSortedData(filtered)
+    }, [searchTerm, datas])
 
-    const handleBackGroundClick = (event, index) => {
+    const handleColumnClick = (event, index) => {
         if (index !== previousColIndex && previousColClicked !== null) {
             previousColClicked.className = 'sorting'
         }
@@ -28,35 +34,35 @@ function EmployeesTable({ employees, columnsTitles }) {
         setPreviousColIndex(index)
         setPreviousColClicked(event.currentTarget)
 
-        const key = Object.keys(employees[0])[index]
+        const key = Object.keys(datas[0])[index]
         let sortedData = []
 
         if (event.currentTarget.classList.contains('sorting')) {
             event.currentTarget.classList.remove('sorting')
             event.currentTarget.classList.add('sorting_asc')
-            sortedData = [...employees].sort((a, b) =>
+            sortedData = [...sortedData].sort((a, b) =>
                 a[key].localeCompare(b[key])
             )
         } else if (event.currentTarget.classList.contains('sorting_asc')) {
             event.currentTarget.classList.remove('sorting_asc')
             event.currentTarget.classList.add('sorting_desc')
-            sortedData = [...employees].sort((b, a) =>
+            sortedData = [...sortedData].sort((b, a) =>
                 a[key].localeCompare(b[key])
             )
         } else if (event.currentTarget.classList.contains('sorting_desc')) {
             event.currentTarget.classList.remove('sorting_desc')
             event.currentTarget.classList.add('sorting_asc')
-            sortedData = [...employees].sort((a, b) =>
+            sortedData = [...sortedData].sort((a, b) =>
                 a[key].localeCompare(b[key])
             )
         }
 
-        setSortedEmployees(sortedData)
+        setSortedData(sortedData)
     }
 
     const lastRowIndex = currentPage * rowsPerPage
     const firstRowIndex = lastRowIndex - rowsPerPage
-    const paginatedEmloyees = sortedEmployees.slice(firstRowIndex, lastRowIndex)
+    const paginatedEmloyees = sortedData.slice(firstRowIndex, lastRowIndex)
 
     return (
         <div className="dataTable">
@@ -93,7 +99,7 @@ function EmployeesTable({ employees, columnsTitles }) {
                                 key={index}
                                 className="sorting"
                                 onClick={(event) =>
-                                    handleBackGroundClick(event, index)
+                                    handleColumnClick(event, index)
                                 }
                             >
                                 {title}
@@ -131,10 +137,10 @@ function EmployeesTable({ employees, columnsTitles }) {
             <div className="table-controls">
                 <p className="table-infos">
                     Showing {firstRowIndex + 1} to {lastRowIndex} of{' '}
-                    {sortedEmployees.length}
+                    {sortedData.length}
                 </p>
                 <Pagination
-                    datas={sortedEmployees}
+                    datas={sortedData}
                     rowsPerPage={rowsPerPage}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
@@ -144,4 +150,4 @@ function EmployeesTable({ employees, columnsTitles }) {
     )
 }
 
-export default EmployeesTable
+export default DataTable
