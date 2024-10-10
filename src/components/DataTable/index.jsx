@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 /*
     gestions des couleurs et bordur à finir
     changer les noms des variables pour les rendre générique à une dataTable
-    Gérer la modale pour préparer l'extraction
 */
 
 function DataTable({ datas, columnsTitles }) {
@@ -18,8 +17,8 @@ function DataTable({ datas, columnsTitles }) {
     const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
-        const filtered = datas.filter((employee) =>
-            Object.values(employee).some((value) =>
+        const filtered = datas.filter((data) =>
+            Object.values(data).some((value) =>
                 value.toLowerCase().includes(searchTerm.toLowerCase())
             )
         )
@@ -35,34 +34,34 @@ function DataTable({ datas, columnsTitles }) {
         setPreviousColClicked(event.currentTarget)
 
         const key = Object.keys(datas[0])[index]
-        let sortedData = []
+        let newSortedData = []
 
         if (event.currentTarget.classList.contains('sorting')) {
             event.currentTarget.classList.remove('sorting')
             event.currentTarget.classList.add('sorting_asc')
-            sortedData = [...sortedData].sort((a, b) =>
+            newSortedData = [...sortedData].sort((a, b) =>
                 a[key].localeCompare(b[key])
             )
         } else if (event.currentTarget.classList.contains('sorting_asc')) {
             event.currentTarget.classList.remove('sorting_asc')
             event.currentTarget.classList.add('sorting_desc')
-            sortedData = [...sortedData].sort((b, a) =>
+            newSortedData = [...sortedData].sort((b, a) =>
                 a[key].localeCompare(b[key])
             )
         } else if (event.currentTarget.classList.contains('sorting_desc')) {
             event.currentTarget.classList.remove('sorting_desc')
             event.currentTarget.classList.add('sorting_asc')
-            sortedData = [...sortedData].sort((a, b) =>
+            newSortedData = [...sortedData].sort((a, b) =>
                 a[key].localeCompare(b[key])
             )
         }
 
-        setSortedData(sortedData)
+        setSortedData(newSortedData)
     }
 
     const lastRowIndex = currentPage * rowsPerPage
     const firstRowIndex = lastRowIndex - rowsPerPage
-    const paginatedEmloyees = sortedData.slice(firstRowIndex, lastRowIndex)
+    const paginatedDatas = sortedData.slice(firstRowIndex, lastRowIndex)
 
     return (
         <div className="dataTable">
@@ -108,18 +107,18 @@ function DataTable({ datas, columnsTitles }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {paginatedEmloyees.length > 0 ? (
-                        paginatedEmloyees.map((employee, index) => (
+                    {paginatedDatas.length > 0 ? (
+                        paginatedDatas.map((data, index) => (
                             <tr key={index}>
-                                <td>{employee.firstName}</td>
-                                <td>{employee.lastName}</td>
-                                <td>{employee.startDate}</td>
-                                <td>{employee.department}</td>
-                                <td>{employee.dateOfBirth}</td>
-                                <td>{employee.street}</td>
-                                <td>{employee.city}</td>
-                                <td>{employee.state}</td>
-                                <td>{employee.zipCode}</td>
+                                <td>{data.firstName}</td>
+                                <td>{data.lastName}</td>
+                                <td>{data.startDate}</td>
+                                <td>{data.department}</td>
+                                <td>{data.dateOfBirth}</td>
+                                <td>{data.street}</td>
+                                <td>{data.city}</td>
+                                <td>{data.state}</td>
+                                <td>{data.zipCode}</td>
                             </tr>
                         ))
                     ) : (

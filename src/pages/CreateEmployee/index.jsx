@@ -6,7 +6,8 @@ import { EmployeeContext } from '../../utils/EmployeeContext'
 import Modal from '../../components/Modal'
 
 function CreateEmployee() {
-    const [isModalOpen, setModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const modalMsg = 'Employee Created !'
     const { addEmployee } = useContext(EmployeeContext)
     const [employee, setEmployee] = useState({
         firstName: '',
@@ -20,6 +21,20 @@ function CreateEmployee() {
         zipCode: '',
     })
 
+    const modalSyle = {
+        blockerBackgroundColor: 'rgba(0,0,0,0.75)',
+        modalWidth: 'clamp(500px, 90% , 100px)',
+        textColor: '#000',
+        textAlign: 'center',
+        fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
+        msgFontWeight: '800',
+        borderColorAnimation: 'rgba(54, 121, 184, 0.5)',
+        lineColorAnimation: 'rgb(54, 121, 184)',
+        buttonBgColor: 'rgb(54, 121, 184)',
+        buttonFontWeight: '700',
+        buttonBgColorHovered: 'rgba(54, 121, 184, 0.5)',
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setEmployee((prev) => ({ ...prev, [name]: value }))
@@ -28,14 +43,16 @@ function CreateEmployee() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         addEmployee(employee)
-        setModalOpen(true)
+        setIsModalOpen(true)
     }
 
     return (
         <>
             <h1>HRnet</h1>
             <div className="container">
-                <Link to="/emloyees">View Current Employees</Link>
+                <Link className="employees-link" to="/emloyees">
+                    View Current Employees
+                </Link>
                 <h2>Create Employee</h2>
                 <form action="#" id="create-employee">
                     <label htmlFor="first-name">First Name</label>
@@ -129,11 +146,20 @@ function CreateEmployee() {
                     </select>
                 </form>
 
-                <button type="submit" onClick={handleSubmit}>
+                <button
+                    className="save-button"
+                    type="submit"
+                    onClick={handleSubmit}
+                >
                     Save
                 </button>
             </div>
-            <Modal isOpen={isModalOpen} setModalOpen={setModalOpen} />
+            <Modal
+                isOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                modalMsg={modalMsg}
+                modalStyle={modalSyle}
+            />
         </>
     )
 }

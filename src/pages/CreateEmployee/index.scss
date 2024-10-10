@@ -6,7 +6,7 @@ h1{
     margin-top: 0;
 }
 
-a{
+.employees-link{
     text-decoration: none;
     color: #FFF;
     padding: 10px;
@@ -15,7 +15,7 @@ a{
     transition: background-color 0.25s;
 }
 
-a:hover{
+.employees-link:hover{
     @include lighter(rgb(0, 105, 217), 0.8);
 }
 
@@ -50,7 +50,7 @@ form > label,
     margin-top: 10px;
 }
 
-button {
+.save-button {
     margin-top: 15px;
     border-radius: 10px;
     padding: 0.6em 1.2em;
@@ -62,13 +62,6 @@ button {
     color: #FFF;
   }
 
-  button:hover {
+  .save-button:hover {
     @include lighter(rgb(33, 136, 56), 0.8);
   }
-
-  button:focus,
-  button:focus-visible {
-    outline: 1px auto -webkit-focus-ring-color; 
-  }
-  
-  
