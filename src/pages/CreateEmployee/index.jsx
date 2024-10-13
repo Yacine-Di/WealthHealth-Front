@@ -3,7 +3,7 @@ import './index.scss'
 import states from '../../utils/states'
 import { useContext, useState } from 'react'
 import { EmployeeContext } from '../../utils/EmployeeContext'
-import Modal from '../../components/Modal'
+import Modal from 'yd-modal'
 
 function CreateEmployee() {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -50,7 +50,7 @@ function CreateEmployee() {
         <>
             <h1>HRnet</h1>
             <div className="container">
-                <Link className="employees-link" to="/emloyees">
+                <Link className="pages-link" to="/emloyees">
                     View Current Employees
                 </Link>
                 <h2>Create Employee</h2>

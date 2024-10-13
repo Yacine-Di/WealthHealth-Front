@@ -11,7 +11,9 @@ function EmployeesList() {
         <>
             <h1>Current Employees</h1>
             <DataTable datas={employees} columnsTitles={columnsTitles} />
-            <Link to="/">Home</Link>
+            <Link className="pages-link" to="/">
+                Home
+            </Link>
         </>
     )
 }

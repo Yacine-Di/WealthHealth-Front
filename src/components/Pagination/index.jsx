@@ -34,7 +34,11 @@ function Pagination({ datas, rowsPerPage, currentPage, setCurrentPage }) {
                     }`}
                     key={index}
                 >
-                    <a href="#" onClick={() => changeCurrentPage(nbr)}>
+                    <a
+                        href="#"
+                        className="page-link"
+                        onClick={() => changeCurrentPage(nbr)}
+                    >
                         {nbr}
                     </a>
                 </li>

@@ -6,7 +6,7 @@ h1{
     margin-top: 0;
 }
 
-.employees-link{
+.pages-link{
     text-decoration: none;
     color: #FFF;
     padding: 10px;
@@ -15,7 +15,7 @@ h1{
     transition: background-color 0.25s;
 }
 
-.employees-link:hover{
+.pages-link:hover{
     @include lighter(rgb(0, 105, 217), 0.8);
 }
 

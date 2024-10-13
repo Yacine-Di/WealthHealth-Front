@@ -1,12 +1,6 @@
 import Pagination from '../Pagination'
-import './index.scss'
 import { useEffect, useState } from 'react'
-
-//TODO
-/*
-    gestions des couleurs et bordur à finir
-    changer les noms des variables pour les rendre générique à une dataTable
-*/
+import './index.scss'
 
 function DataTable({ datas, columnsTitles }) {
     const [previousColIndex, setPreviousColIndex] = useState(0)
@@ -25,6 +19,11 @@ function DataTable({ datas, columnsTitles }) {
         setSortedData(filtered)
     }, [searchTerm, datas])
 
+    /** Function that change icon from column header and sort the datas
+     *
+     * @param {MouseEvent} event
+     * @param {int} index
+     */
     const handleColumnClick = (event, index) => {
         if (index !== previousColIndex && previousColClicked !== null) {
             previousColClicked.className = 'sorting'
@@ -59,8 +58,8 @@ function DataTable({ datas, columnsTitles }) {
         setSortedData(newSortedData)
     }
 
-    const lastRowIndex = currentPage * rowsPerPage
-    const firstRowIndex = lastRowIndex - rowsPerPage
+    const lastRowIndex = Math.min(currentPage * rowsPerPage, sortedData.length)
+    const firstRowIndex = (currentPage - 1) * rowsPerPage
     const paginatedDatas = sortedData.slice(firstRowIndex, lastRowIndex)
 
     return (
@@ -109,7 +108,7 @@ function DataTable({ datas, columnsTitles }) {
                 <tbody>
                     {paginatedDatas.length > 0 ? (
                         paginatedDatas.map((data, index) => (
-                            <tr key={index}>
+                            <tr className="row row--color" key={index}>
                                 <td>{data.firstName}</td>
                                 <td>{data.lastName}</td>
                                 <td>{data.startDate}</td>

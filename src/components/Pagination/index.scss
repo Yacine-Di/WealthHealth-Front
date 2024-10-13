@@ -1,9 +1,41 @@
-.pagination{
+.pagination {
     display: flex;
+    list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-.page-item{
-    list-style: none;
-    margin: 0 2px;
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    text-decoration: none;
+    color: #2C3E50; 
+    background-color: #ECF1F4; 
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    display: block;
+}
+
+.page-link:hover {
+    background-color: #BFD3E1;
+    color: #ffffff;
+}
+
+.page-item.active .page-link {
+    background-color: #3498DB;
+    color: #ffffff;
+}
+
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+    background-color: #D4E4D1;
+}
+
+.page-item:first-child .page-link:hover,
+.page-item:last-child .page-link:hover {
+    background-color: #27AE60;
+    color: #ffffff;
 }
