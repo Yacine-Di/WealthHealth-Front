@@ -13,7 +13,7 @@ function CreateEmployee() {
         firstName: '',
         lastName: '',
         startDate: '',
-        department: '',
+        department: 'Sales',
         dateOfBirth: '',
         street: '',
         city: '',
@@ -135,8 +135,8 @@ function CreateEmployee() {
                     <select
                         name="department"
                         id="department"
-                        value={employee.department}
                         onChange={handleChange}
+                        defaultValue="Sales"
                     >
                         <option value="Sales">Sales</option>
                         <option value="Marketing">Marketing</option>
