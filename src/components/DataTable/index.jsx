@@ -2,6 +2,13 @@ import Pagination from '../Pagination'
 import { useEffect, useState } from 'react'
 import './index.scss'
 
+/**
+ * Component to display a table with a pagination and a search bar.
+ *
+ * @param {object} datas - The data to be displayed in the table.
+ * @param {array} columnsTitles - The titles of the columns in the table.
+ * @returns A React component.
+ */
 function DataTable({ datas, columnsTitles }) {
     const [previousColIndex, setPreviousColIndex] = useState(0)
     const [previousColClicked, setPreviousColClicked] = useState(null)
@@ -17,6 +24,7 @@ function DataTable({ datas, columnsTitles }) {
             )
         )
         setSortedData(filtered)
+        setCurrentPage(1)
     }, [searchTerm, datas])
 
     /** Function that change icon from column header and sort the datas
