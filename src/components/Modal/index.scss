@@ -14,6 +14,7 @@
 }
 
 .modal{
+    width: clamp(500px, 90% , 100px);
     background-color: #FFF;
     padding: 1.5rem;
     border-radius: 10px;
